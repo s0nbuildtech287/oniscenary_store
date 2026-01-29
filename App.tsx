@@ -28,6 +28,7 @@ const App: React.FC = () => {
   });
   
   const [items, setItems] = useState<MediaItem[]>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState<MediaCategory | 'All'>('All');
   const [filterGenre, setFilterGenre] = useState<string>('All');
@@ -76,13 +77,19 @@ const App: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           setItems(data);
+          setIsDataLoaded(true);
         }
       } catch (error) {
         console.error('Error loading data from server:', error);
         // Fallback to localStorage nếu server không hoạt động
         const saved = localStorage.getItem('oniscenary_db');
         if (saved) {
-          try { setItems(JSON.parse(saved)); } catch (e) {}
+          try { 
+            setItems(JSON.parse(saved)); 
+            setIsDataLoaded(true);
+          } catch (e) {}
+        } else {
+          setIsDataLoaded(true);
         }
       }
     };
@@ -91,7 +98,8 @@ const App: React.FC = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    if (!isLoggedIn) return;
+    // Chỉ save khi dữ liệu đã được load xong, tránh ghi đè khi mới mount
+    if (!isLoggedIn || !isDataLoaded) return;
     
     // Lưu dữ liệu lên server
     const saveData = async () => {
@@ -109,7 +117,7 @@ const App: React.FC = () => {
     };
     
     saveData();
-  }, [items, isLoggedIn]);
+  }, [items, isLoggedIn, isDataLoaded]);
 
   // Reset page and genre when filters change
   useEffect(() => {
