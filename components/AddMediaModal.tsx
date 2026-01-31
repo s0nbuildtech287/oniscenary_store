@@ -6,11 +6,12 @@ interface AddMediaModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (item: MediaItem) => void;
+  onDelete?: (id: string) => void;
   editingItem?: MediaItem | null;
   allItems: MediaItem[];
 }
 
-const AddMediaModal: React.FC<AddMediaModalProps> = ({ isOpen, onClose, onSave, editingItem, allItems }) => {
+const AddMediaModal: React.FC<AddMediaModalProps> = ({ isOpen, onClose, onSave, onDelete, editingItem, allItems }) => {
   const [formData, setFormData] = useState<Partial<MediaItem>>({
     title: "",
     category: MediaCategory.ANIME,
@@ -292,7 +293,22 @@ const AddMediaModal: React.FC<AddMediaModalProps> = ({ isOpen, onClose, onSave, 
           <Button variant="primary" type="button" onClick={handleSubmit} className="w-full sm:flex-1 py-3 sm:py-2.5 rounded-xl sm:rounded-xl text-sm sm:text-base order-1 sm:order-2">
             <i className="fa-solid fa-save"></i> {editingItem ? "Cập nhật" : "Thêm vào kho"}
           </Button>
-          <Button variant="ghost" onClick={onClose} className="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl sm:rounded-xl text-sm sm:text-base order-2 sm:order-1 text-slate-400">
+          {editingItem && onDelete && (
+            <Button
+              variant="danger"
+              type="button"
+              onClick={() => {
+                if (window.confirm(`Xóa "${editingItem.title}" khỏi kho lưu trữ?`)) {
+                  onDelete(editingItem.id);
+                  onClose();
+                }
+              }}
+              className="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl sm:rounded-xl text-sm sm:text-base order-3 sm:order-1"
+            >
+              <i className="fa-solid fa-trash"></i> Xóa
+            </Button>
+          )}
+          <Button variant="ghost" onClick={onClose} className="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl sm:rounded-xl text-sm sm:text-base order-2 sm:order-3 text-slate-400">
             Đóng
           </Button>
         </div>

@@ -673,6 +673,7 @@ const App: React.FC = () => {
           setSelectedItem(null);
         }}
         onSave={handleSave}
+        onDelete={handleDelete}
         editingItem={selectedItem}
         allItems={items}
       />
@@ -683,16 +684,6 @@ const App: React.FC = () => {
 
       {/* Chat Bot */}
       <ChatBot />
-
-      {selectedItem && isModalOpen && (
-        <div className="fixed bottom-24 sm:bottom-6 left-0 right-0 z-[70] px-4 flex justify-center pointer-events-none animate-in slide-in-from-bottom-10 duration-300">
-          <div className="bg-slate-900/95 backdrop-blur-2xl border border-white/10 rounded-[20px] sm:rounded-[24px] p-2 flex gap-2 shadow-2xl pointer-events-auto">
-            <Button variant="danger" onClick={() => handleDelete(selectedItem.id)} className="text-xs px-4 sm:px-6 py-2 sm:py-2.5 rounded-[14px] sm:rounded-[18px]">
-              Xóa khỏi kho
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
