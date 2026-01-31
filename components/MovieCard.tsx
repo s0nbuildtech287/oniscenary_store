@@ -71,12 +71,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ item, rank, onClick, onPlay }) =>
         </div>
       </div>
       
-      <div className="p-2.5 sm:p-3 flex flex-col flex-1 justify-between gap-2">
+      <div className="p-2 sm:p-2.5 flex flex-col flex-1 justify-between gap-1.5">
         <div>
-          <h3 className="text-[11px] sm:text-sm font-bold text-white line-clamp-1 group-hover:text-indigo-400 transition-colors">
+          <h3 className="text-[10px] sm:text-xs font-bold text-white line-clamp-1 group-hover:text-indigo-400 transition-colors">
             {item.title}
           </h3>
-          <p className="text-[8px] sm:text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-bold">
+          <p className="text-[7px] sm:text-[9px] text-slate-500 mt-0.5 uppercase tracking-widest font-bold">
             {item.category}
           </p>
         </div>
@@ -84,9 +84,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ item, rank, onClick, onPlay }) =>
         {item.movieUrl && (
           <button 
             onClick={handleLinkClick}
-            className="w-full bg-sky-600/10 hover:bg-sky-600 text-sky-500 hover:text-white py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black transition-all duration-300 flex items-center justify-center gap-2 border border-sky-500/40 group/btn active:scale-95 shadow-sm uppercase tracking-wider"
+            className="w-full bg-sky-600/10 hover:bg-sky-600 text-sky-500 hover:text-white py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black transition-all duration-300 flex items-center justify-center gap-1.5 border border-sky-500/40 group/btn active:scale-95 shadow-sm uppercase tracking-wider"
           >
-            <i className="fa-brands fa-youtube text-[12px] sm:text-[14px]"></i>
+            <i className="fa-brands fa-youtube text-[11px] sm:text-[12px]"></i>
             Trailer
           </button>
         )}
