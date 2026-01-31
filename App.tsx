@@ -69,7 +69,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!isLoggedIn) return;
-<<<<<<< HEAD
     const saved = localStorage.getItem("oniscenary_db");
     if (saved) {
       try {
@@ -82,57 +81,6 @@ const App: React.FC = () => {
     if (!isLoggedIn) return;
     localStorage.setItem("oniscenary_db", JSON.stringify(items));
   }, [items, isLoggedIn]);
-=======
-    
-    // Load dữ liệu từ server
-    const loadData = async () => {
-      try {
-        const response = await fetch('/api/data');
-        if (response.ok) {
-          const data = await response.json();
-          setItems(data);
-          setIsDataLoaded(true);
-        }
-      } catch (error) {
-        console.error('Error loading data from server:', error);
-        // Fallback to localStorage nếu server không hoạt động
-        const saved = localStorage.getItem('oniscenary_db');
-        if (saved) {
-          try { 
-            setItems(JSON.parse(saved)); 
-            setIsDataLoaded(true);
-          } catch (e) {}
-        } else {
-          setIsDataLoaded(true);
-        }
-      }
-    };
-    
-    loadData();
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    // Chỉ save khi dữ liệu đã được load xong, tránh ghi đè khi mới mount
-    if (!isLoggedIn || !isDataLoaded) return;
-    
-    // Lưu dữ liệu lên server
-    const saveData = async () => {
-      try {
-        await fetch('/api/data', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(items)
-        });
-      } catch (error) {
-        console.error('Error saving data to server:', error);
-        // Fallback: vẫn lưu vào localStorage để backup
-        localStorage.setItem('oniscenary_db', JSON.stringify(items));
-      }
-    };
-    
-    saveData();
-  }, [items, isLoggedIn, isDataLoaded]);
->>>>>>> 288a8791b6e097e178ef9644763c5d2959687ec6
 
   // Reset page and genre when filters change
   useEffect(() => {
