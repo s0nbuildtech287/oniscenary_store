@@ -72,14 +72,31 @@ const App: React.FC = () => {
     const saved = localStorage.getItem("oniscenary_db");
     if (saved) {
       try {
-        setItems(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setItems(parsed);
+          return;
+        }
       } catch (e) {}
     }
+    fetch("/api/data")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setItems(data);
+        }
+      })
+      .catch(() => {});
   }, [isLoggedIn]);
 
   useEffect(() => {
     if (!isLoggedIn) return;
     localStorage.setItem("oniscenary_db", JSON.stringify(items));
+    fetch("/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(items),
+    }).catch(() => {});
   }, [items, isLoggedIn]);
 
   // Reset page and genre when filters change
