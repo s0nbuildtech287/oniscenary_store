@@ -18,7 +18,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setError('');
 
     const savedUserStr = localStorage.getItem('oniscenary_user');
-    let validUser = { username: 'xu4ns0n', password: '123456' };
+    let validUser = { username: 'xu4ns0n', password: 'Sondeptrai123@k' };
     
     if (savedUserStr) {
       try {

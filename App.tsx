@@ -19,10 +19,12 @@ interface UserProfile {
 const ITEMS_PER_PAGE = 12;
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem("oniscenary_session") === "true" || sessionStorage.getItem("oniscenary_session") === "true";
+  });
   const [user, setUser] = useState<UserProfile>({
     username: "xu4ns0n",
-    password: "123456",
+    password: "Sondeptrai123@k",
     avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=xu4ns0n",
   });
 
@@ -56,9 +58,6 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const session = sessionStorage.getItem("oniscenary_session");
-    if (session === "true") setIsLoggedIn(true);
-
     const savedUser = localStorage.getItem("oniscenary_user");
     if (savedUser) {
       try {
@@ -152,11 +151,15 @@ const App: React.FC = () => {
 
   const handleLogin = (status: boolean) => {
     setIsLoggedIn(status);
-    if (status) sessionStorage.setItem("oniscenary_session", "true");
+    if (status) {
+      localStorage.setItem("oniscenary_session", "true");
+      sessionStorage.setItem("oniscenary_session", "true");
+    }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("oniscenary_session");
     sessionStorage.removeItem("oniscenary_session");
     setIsUserDropdownOpen(false);
   };
